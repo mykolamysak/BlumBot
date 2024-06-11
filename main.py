@@ -65,12 +65,12 @@ def on_click(x, y, button, pressed):
     global pause_clicking
     if button == mouse.Button.right and pressed:
         pause_clicking = not pause_clicking
-        print(f"Clicking {'paused' if pause_clicking else 'resumed'}")
+        print(f"[⌛] Clicking {'paused' if pause_clicking else 'resumed'}")
         return True
 
 def on_press(key):
     if key == keyboard.Key.space:
-        print("Spacebar pressed. Exiting...")
+        print("[🦋] Spacebar pressed. Exiting...")
         exit_program.set()
         return False  # Stop listener
 
@@ -86,21 +86,24 @@ def click_on_color(target_color, bbox):
 
                 if position:
                     current_time = time.time()
-                    print(f"Time since last click: {current_time - last_click_time} seconds")
+                    print(f"[⌚] Time since last click: {current_time - last_click_time} seconds")
                     last_click_time = current_time
                     mouse_controller.position = position
                     mouse_controller.press(Button.left)  # Press mouse button
                     mouse_controller.release(Button.left)  # Release mouse button
-            time.sleep(0.1)  # Small delay to prevent tight looping
 
 def main(target_color):
     global pause_clicking
-    print(f"Searching for color BGR: {target_color}")
+    print(f"[🍀] Searching for color BGR: {target_color}")
     bbox = get_telegram_window_bbox()
     if bbox is None:
-        print("Telegram window not found.")
+        print("[🍂] Telegram window not found.")
         return
-    print(f"Telegram window coordinates: {bbox}")
+    print(f"[🌐] Telegram window coordinates: {bbox}")
+
+    # Активуємо вікно Telegram
+    telegram_window = gw.getWindowsWithTitle('Telegram')[0]
+    telegram_window.activate()
 
     mouse_listener = mouse.Listener(on_click=on_click)
     mouse_listener.start()
@@ -115,7 +118,7 @@ def main(target_color):
     exit_program.set()  # Ensure click thread will exit
     click_thread.join()
     mouse_listener.stop()
-    print("Program exited.")
+    print("\n[🗿] Program exited.")
 
 if __name__ == "__main__":
     target_color = (1, 218, 69)  # Set the color directly in BGR format
