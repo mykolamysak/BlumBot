@@ -1,4 +1,4 @@
-# Telegram Blum Collector 🍀
+# Telegram Blum Bot 🍀
 
 This Python script automates the process of clicking on a specific color within the Telegram window. The script pauses or resumes clicking based on right mouse button clicks and exits when the spacebar is pressed.
 
